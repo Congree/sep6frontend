@@ -1,23 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatSidenavModule} from '@angular/material/sidenav';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './layout/app.component';
-import { HeadComponent } from './layout/head.component';
-import { LeftPanelComponent } from './layout/left-panel.component';
-import { UsersComponent } from './components/users/users.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FlightDataComponent } from './components/flight-data/flight-data.component';
+import { WeatherDataComponent } from './components/weather-data/weather-data.component';
+import { OverviewPageComponent } from './components/overview-page/overview-page.component';
+import { AirportDataComponent } from './components/airport-data/airport-data.component';
+
+//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+//import { PlotlyModule } from 'angular-plotly.js';
+
+//PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeadComponent,
-    LeftPanelComponent,
-    UsersComponent,
-    DashboardComponent
+    NavMenuComponent,
+    FlightDataComponent,
+    WeatherDataComponent,
+    OverviewPageComponent,
+    AirportDataComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +39,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatInputModule,
     MatFormFieldModule,
     MatSidenavModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
+   // PlotlyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
