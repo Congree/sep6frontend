@@ -17,11 +17,9 @@ import { FlightDataComponent } from './components/flight-data/flight-data.compon
 import { WeatherDataComponent } from './components/weather-data/weather-data.component';
 import { OverviewPageComponent } from './components/overview-page/overview-page.component';
 import { AirportDataComponent } from './components/airport-data/airport-data.component';
+import { FlightsService } from './services/flights.service';
+import { HttpClientModule } from '@angular/common/http';
 
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-//import { PlotlyModule } from 'angular-plotly.js';
-
-//PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -30,7 +28,7 @@ import { AirportDataComponent } from './components/airport-data/airport-data.com
     FlightDataComponent,
     WeatherDataComponent,
     OverviewPageComponent,
-    AirportDataComponent
+    AirportDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,10 +43,9 @@ import { AirportDataComponent } from './components/airport-data/airport-data.com
     MatIconModule,
     MatListModule,
     NgxChartsModule,
-    BrowserAnimationsModule
-   // PlotlyModule
+    HttpClientModule
   ],
-  providers: [],
+  providers: [FlightsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
