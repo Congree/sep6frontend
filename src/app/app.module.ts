@@ -15,10 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FlightDataComponent } from './components/flight-data/flight-data.component';
 import { WeatherDataComponent } from './components/weather-data/weather-data.component';
-import { OverviewPageComponent } from './components/overview-page/overview-page.component';
-import { AirportDataComponent } from './components/airport-data/airport-data.component';
 import { FlightsService } from './services/flights.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AirportDataComponent } from './components/airport-data/airport-data.component';
 
 
 @NgModule({
@@ -27,7 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
     NavMenuComponent,
     FlightDataComponent,
     WeatherDataComponent,
-    OverviewPageComponent,
     AirportDataComponent,
   ],
   imports: [
