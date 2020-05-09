@@ -12,7 +12,7 @@ import { PlanesModel } from 'src/app/models/planes-model';
 })
 export class FlightDataComponent implements OnInit {
   data: FlighsPerMonthModel[];  
-  url1 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/numberOfFlightsPerMonth';  
+  url1 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/numberOfFlightsPerMonths';  
   //url2 = 'https://test-nycflights13-api.azurewebsites.net/api/Planes';
   Model = [];
   Seats = []
