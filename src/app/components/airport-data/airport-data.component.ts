@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./airport-data.component.scss']
 })
 export class AirportDataComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() { }  
+  ngOnInit() {  
   }
 
 }
