@@ -8,6 +8,7 @@ export class PlanesModel {
     public seats: number;
     public speed: number;
     public engine: string;
+    public planes: number;
 
     constructor(
     tailNumber: string,
@@ -19,6 +20,7 @@ export class PlanesModel {
     seats: number,
     speed: number,
     engine: string,
+    planes: number,
     ) {
         this.tailNumber = tailNumber;
         this.year = year;
@@ -29,5 +31,6 @@ export class PlanesModel {
         this.seats = seats;
         this.speed = speed;
         this.engine = engine;
+        this.planes = planes;
     }
 }
