@@ -3,7 +3,7 @@ import { FlighsModel } from 'src/app/models/flighs-model';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { PlanesModel } from 'src/app/models/planes-model';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-flight-data',
@@ -12,10 +12,10 @@ import { PlanesModel } from 'src/app/models/planes-model';
 })
 export class FlightDataComponent implements OnInit {
   data: FlighsModel[];  
-  url1 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/numberOfFlightsPerMonths';  // number of flights per month
-  url2 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/top10Destinations/JFK'; //JFK
-  url3 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/top10Destinations/EWR'; //EWR
-  url4 = 'https://test-nycflights13-api.azurewebsites.net/api/Flights/top10Destinations/LGA'; //LGA
+  url1 = `${ environment.API_HOST }/api/Flights/months`;  // number of flights per month
+  url2 = `${ environment.API_HOST }/api/Flights/destinations?origin=JFK`; //JFK
+  url3 = `${ environment.API_HOST }/api/Flights/destinations?origin=EWR`; //EWR
+  url4 = `${ environment.API_HOST }/api/Flights/destinations?origin=LGA`; //LGA
  
   Month = [];  
   Flight = [];  

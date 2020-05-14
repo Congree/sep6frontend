@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherModel } from 'src/app/models/weather-model';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-weather-data',
@@ -11,7 +12,7 @@ import { Chart } from 'chart.js';
 export class WeatherDataComponent implements OnInit {
 
   data: WeatherModel[];  
-  url1 = 'https://test-nycflights13-api.azurewebsites.net/api/Weather/temperatureAtOrigin/JFK';  
+  url1 = `${ environment.API_HOST }/api/Weather/temperature?origin=JFK`;  
   TemperatureInCelsius = [];
   DateTime = []; 
   lineChart = [];  
