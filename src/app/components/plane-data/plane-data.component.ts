@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { PlanesModel } from 'src/app/models/planes-model';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-plane-data',
@@ -11,7 +11,7 @@ import { PlanesModel } from 'src/app/models/planes-model';
 })
 export class PlaneDataComponent implements OnInit {
   data: PlanesModel[];  
-  url1 = 'https://test-nycflights13-api.azurewebsites.net/api/Planes/manufacturersWithMoreThan200Planes';  
+  url1 = `${ environment.API_HOST }/api/Planes/manufacturers`;  
   Planes = [];
   Manufacturer = []; 
   barchart = [];  
