@@ -3,6 +3,7 @@ import { WeatherModel } from 'src/app/models/weather-model';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { environment } from '../../../environments/environment';
+import { FlightsService } from 'src/app/services/flights.service';
 
 @Component({
   selector: 'app-weather-data',
@@ -12,9 +13,23 @@ import { environment } from '../../../environments/environment';
 export class WeatherDataComponent implements OnInit {
 
   data: WeatherModel[];  
-  url1 = `${ environment.API_HOST }/api/Weather/temperature?origin=JFK`;  
+  data2: FlightsService[];
+  url1 = `${ environment.API_HOST }/api/Weather/temperature?origin=JFK`;
+  url2 = `${ environment.API_HOST }/api/Weather/temperature/origins`;
   TemperatureInCelsius = [];
-  DateTime = []; 
+  TemperatureInCelsiusJFK = [];
+  TemperatureInCelsiusEWR = [];
+  TemperatureInCelsiusLGA = [];
+  TemperatureInCelsiusOrigins = [];
+  TemperatureInCelsiusOriginsJFK = [];
+  TemperatureInCelsiusOriginsEWR = [];
+  TemperatureInCelsiusOriginsLGA = [];
+  DateTime = [];
+  DateTimeOrigins = []; 
+  DateTimeOriginsJFK = []; 
+  DateTimeOriginsEWR = []; 
+  DateTimeOriginsLGA = [];  
+  Origin = [];
   lineChart = [];  
   constructor(private http: HttpClient) { }  
   ngOnInit() {  
@@ -68,7 +83,77 @@ export class WeatherDataComponent implements OnInit {
           }  
         }  
       });  
-    });  
+    }); 
+    
+    this.http.get(this.url2).subscribe((result: WeatherModel[]) => {  
+      result.forEach(x => {  
+        switch(x.origin){
+          case "JFK":
+            console.log(x);
+            this.TemperatureInCelsiusJFK.push(x.temperatureInCelsius);
+            this.DateTimeOriginsJFK.push(x.dateTime);
+            break;
+          case "EWR":
+            this.TemperatureInCelsiusEWR.push(x.temperatureInCelsius);
+            this.DateTimeOriginsEWR.push(x.dateTime);
+            break;
+          case "LGA":
+            this.TemperatureInCelsiusLGA.push(x.temperatureInCelsius);
+            this.DateTimeOriginsLGA.push(x.dateTime);
+            break;
+        }
+      })
+      this  
+      this.lineChart = new Chart('canvas2', {  
+        type: 'line',  
+        data: {  
+          labels: [this.DateTimeOriginsJFK, this.DateTimeOriginsEWR, this.DateTimeOriginsLGA] , 
+          datasets: [  
+            {  
+              data: this.TemperatureInCelsiusOriginsJFK,  
+              label: "JFK",
+              borderColor: '#3cba9f',  
+              fill: true,
+              showLine: false,
+            },
+            {  
+              data: this.TemperatureInCelsiusOriginsEWR,  
+              label: "EWR",
+              borderColor: '#FFCB32',  
+              fill: true,
+              showLine: false,
+            },
+            {  
+              data: this.TemperatureInCelsiusOriginsLGA,  
+              label: "LGA",
+              borderColor: '#CB32FF',  
+              fill: true,
+              showLine: false,
+            }
+          ]
+            
+        },  
+        options: {  
+          legend: {  
+            display: true,  
+          },  
+          scales: {  
+            xAxes: [{  
+              display: true,
+              type: 'time',
+              time: {
+                unit: 'month'
+              } 
+            }],  
+            yAxes: [{  
+              display: true  
+            }],  
+          }  
+        }  
+      });  
+    });
+    
+
   }
 
 }
