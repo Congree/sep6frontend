@@ -10,7 +10,7 @@ export class FlightsService {
   constructor(private _http: HttpClient) { }
 
   flightsPerMonth(){
-    return this._http.get("http://nycflights-api-test.northeurope.azurecontainer.io/api/Flights/numberOfFlightsPerMonth")
+    return this._http.get("${ environment.API_HOST }/api/Flights/months")
     .pipe(map(result => {
       return result;
     }));
