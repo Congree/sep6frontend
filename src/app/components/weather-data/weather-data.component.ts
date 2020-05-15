@@ -58,6 +58,10 @@ export class WeatherDataComponent implements OnInit {
           ],
         },
         options: {
+          events: [],
+          tooltips: {
+            enabled: false
+          },
           legend: {
             display: false,
           },
@@ -81,7 +85,7 @@ export class WeatherDataComponent implements OnInit {
       });
     });
 
-    this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
+/*     this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
       result.forEach((x) => {
         switch (x.origin) {
           case 'JFK':
@@ -136,6 +140,9 @@ export class WeatherDataComponent implements OnInit {
         },
         options: {
           events: [],
+          tooltips: {
+            enabled: false
+          },
           legend: {
             display: true,
           },
@@ -157,6 +164,6 @@ export class WeatherDataComponent implements OnInit {
           },
         },
       });
-    });
+    }); */
   }
 }
