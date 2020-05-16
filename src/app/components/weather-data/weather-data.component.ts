@@ -15,6 +15,8 @@ export class WeatherDataComponent implements OnInit {
   data2: FlightsService[];
   url1 = `${environment.API_HOST}/api/Weather/temperature?origin=JFK`;
   url2 = `${environment.API_HOST}/api/Weather/temperature/origins`;
+  url3 = `${environment.API_HOST}/api/Weather/observations/origins`;
+
   TemperatureInCelsius = [];
   TemperatureInCelsiusJFK = [];
   TemperatureInCelsiusEWR = [];
@@ -22,8 +24,11 @@ export class WeatherDataComponent implements OnInit {
   DateTime = [];
   DateTimeOrigins = [];
   Origin = [];
+  Observations = [];
   lineChart = [];
+
   constructor(private http: HttpClient) {}
+
   ngOnInit() {
     this.http.get(this.url1).subscribe((result: WeatherModel[]) => {
       result.forEach((x) => {
@@ -31,7 +36,7 @@ export class WeatherDataComponent implements OnInit {
         this.TemperatureInCelsius.push(x.temperatureInCelsius);
       });
       this;
-      this.lineChart = new Chart('canvas', {
+      new Chart('canvas', {
         type: 'line',
         data: {
           labels: this.DateTime,
@@ -85,7 +90,65 @@ export class WeatherDataComponent implements OnInit {
       });
     });
 
-/*     this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
+    this.http.get(this.url3).subscribe((result: WeatherModel[]) => {
+      result.forEach((x) => {
+        this.Origin.push(x.origin);
+        this.Observations.push(x.observations);
+      });
+      this;
+      new Chart('canvas3', {
+        type: 'bar',
+        data: {
+          labels: this.Origin,
+          datasets: [
+            {
+              data: this.Observations,
+              borderColor: '#3cba9f',
+              backgroundColor: [
+                '#3cb371',
+                '#0000FF',
+                '#9966FF',
+                '#4C4CFF',
+                '#00FFFF',
+                '#f990a7',
+                '#aad2ed',
+                '#FF00FF',
+                'Blue',
+                'Red',
+                'Blue',
+              ],
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          tooltips: {
+            enabled: true
+          },
+          legend: {
+            display: false,
+          },
+          scales: {
+            xAxes: [
+              {
+                display: true,
+              },
+            ],
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  suggestedMin: 8700,
+                  suggestedMax: 8715,
+                }
+              },
+            ],
+          },
+        },
+      });
+    });
+
+  this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
       result.forEach((x) => {
         switch (x.origin) {
           case 'JFK':
@@ -109,8 +172,7 @@ export class WeatherDataComponent implements OnInit {
         }
         this.DateTimeOrigins.push(x.dateTime);
       });
-      this;
-      this.lineChart = new Chart('canvas2', {
+      new Chart('canvas2', {
         type: 'line',
         data: {
           labels: this.DateTimeOrigins,
@@ -164,6 +226,6 @@ export class WeatherDataComponent implements OnInit {
           },
         },
       });
-    }); */
+    });
   }
 }
