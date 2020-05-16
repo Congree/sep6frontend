@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FlighsModel } from 'src/app/models/flighs-model';
+import { AirtimeModel} from 'src/app/models/air-time-model'
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js';
-import { PlanesModel } from 'src/app/models/planes-model';
-import { environment } from '../../../environments/environment';
+import { GetMeanAirtimeForOrigin } from './flight-data.requests'
+import { FlighsModel } from 'src/app/models/flighs-model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-flight-data',
   templateUrl: './flight-data.component.html',
   styleUrls: ['./flight-data.component.scss']
 })
+
 export class FlightDataComponent implements OnInit {
   data: FlighsModel[];  
   url1 = `${ environment.API_HOST }/api/Flights/months`;  // number of flights per month
   url2 = `${ environment.API_HOST }/api/Flights/destinations?origin=JFK`; //JFK
   url3 = `${ environment.API_HOST }/api/Flights/destinations?origin=EWR`; //EWR
   url4 = `${ environment.API_HOST }/api/Flights/destinations?origin=LGA`; //LGA
- 
+
   Month = [];  
   Flight = [];  
   NumberOfFlights = [];
@@ -24,8 +26,11 @@ export class FlightDataComponent implements OnInit {
   DestinationEWR = [];
   DestinationLGA = [];
   barchart = [];  
-  constructor(private http: HttpClient) { }  
+  constructor(private http: HttpClient) {
+   }  
+
   ngOnInit() {  
+
     this.http.get(this.url1).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.Month.push(x.month);  
@@ -167,6 +172,8 @@ export class FlightDataComponent implements OnInit {
       });  
     });  
 
+
+
     this.http.get(this.url4).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.DestinationLGA.push(x.destination);  
@@ -198,30 +205,73 @@ export class FlightDataComponent implements OnInit {
             }  
           ]  
         },  
-        options: {  
-          legend: {  
-            display: false  
-          },  
-          scales: {  
-            xAxes: [{  
-              display: true,
-              plugins: {
-                sort:
-                {
-                  enable: false,
-                  mode: 'function',
-                  reference: [],
-                  sortBy: 'label',
-                  order: 'asc',
-                }
-              },
-            }],  
-            yAxes: [{  
-              display: true  
-            }],  
+          options: {  
+            legend: {  
+              display: false  
+            },  
+            scales: {  
+              xAxes: [{  
+                display: true,
+                plugins: {
+                  sort:
+                  {
+                    enable: false,
+                    mode: 'function',
+                    reference: [],
+                    sortBy: 'label',
+                    order: 'asc',
+                  }
+                },
+              }],  
+              yAxes: [{  
+                display: true  
+              }],  
+            }  
           }  
+          });  
+        });  
+      
+    this.InitAirtimeChart();
+  }
+
+  async InitAirtimeChart() {
+    let resultJFK:AirtimeModel;
+    let resultEWR:AirtimeModel;
+    let resultLGA:AirtimeModel;
+
+    await GetMeanAirtimeForOrigin(this.http, "JFK").then(result => resultJFK = result);
+    await GetMeanAirtimeForOrigin(this.http, "EWR").then(result => resultEWR = result);
+    await GetMeanAirtimeForOrigin(this.http, "LGA").then(result => resultLGA = result);
+
+    new Chart('canvas5', {  
+      type: 'bar',
+      data: {  
+        labels: [resultJFK.origin, resultEWR.origin, resultLGA.origin],  
+        datasets: [  
+          {  
+            data: [resultJFK.airTime, resultEWR.airTime, resultLGA.airTime],  
+            borderColor: '#3cba9f',  
+              backgroundColor: [  
+                "#3cb371",  
+                "#0000FF",  
+                "#9966FF",  
+              ],  
+          }
+        ]  
+      },  
+      options: {  
+        legend: {  
+          display: false  
+        },  
+        scales: {  
+          xAxes: [{  
+            display: true  
+          }],  
+          yAxes: [{  
+            display: true  
+          }],  
         }  
-      });  
-    });  
-  }  
-}
+      }  
+    });
+  };  
+}  
