@@ -1,4 +1,3 @@
-  
 import { HttpClient } from '@angular/common/http';
 import { FlighsModel } from 'src/app/models/flighs-model';
 import { AirtimeModel } from 'src/app/models/air-time-model';

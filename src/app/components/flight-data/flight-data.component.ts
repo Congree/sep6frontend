@@ -172,8 +172,6 @@ export class FlightDataComponent implements OnInit {
       });  
     });  
 
-
-
     this.http.get(this.url4).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.DestinationLGA.push(x.destination);  
