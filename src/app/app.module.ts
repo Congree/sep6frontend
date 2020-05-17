@@ -15,13 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FlightDataComponent } from './components/flight-data/flight-data.component';
 import { WeatherDataComponent } from './components/weather-data/weather-data.component';
-import { OverviewPageComponent } from './components/overview-page/overview-page.component';
-import { AirportDataComponent } from './components/airport-data/airport-data.component';
+import { FlightsService } from './services/flights.service';
+import { HttpClientModule } from '@angular/common/http';
+import { PlaneDataComponent } from './components/plane-data/plane-data.component';
 
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-//import { PlotlyModule } from 'angular-plotly.js';
-
-//PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -29,8 +26,7 @@ import { AirportDataComponent } from './components/airport-data/airport-data.com
     NavMenuComponent,
     FlightDataComponent,
     WeatherDataComponent,
-    OverviewPageComponent,
-    AirportDataComponent
+    PlaneDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,10 +41,9 @@ import { AirportDataComponent } from './components/airport-data/airport-data.com
     MatIconModule,
     MatListModule,
     NgxChartsModule,
-    BrowserAnimationsModule
-   // PlotlyModule
+    HttpClientModule
   ],
-  providers: [],
+  providers: [FlightsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
