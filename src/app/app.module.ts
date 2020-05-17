@@ -17,7 +17,6 @@ import { FlightDataComponent } from './components/flight-data/flight-data.compon
 import { WeatherDataComponent } from './components/weather-data/weather-data.component';
 import { FlightsService } from './services/flights.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AirportDataComponent } from './components/airport-data/airport-data.component';
 import { PlaneDataComponent } from './components/plane-data/plane-data.component';
 
 
@@ -27,7 +26,6 @@ import { PlaneDataComponent } from './components/plane-data/plane-data.component
     NavMenuComponent,
     FlightDataComponent,
     WeatherDataComponent,
-    AirportDataComponent,
     PlaneDataComponent,
   ],
   imports: [
