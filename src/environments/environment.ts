@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_HOST: "https://test-nycflights13-api.azurewebsites.net/"
+  API_HOST: "http://localhost:8080"
 };
 
 /*

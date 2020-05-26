@@ -5,8 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "start:master": "ng serve --configuration=production",
+    "start:test": "ng serve --configuration=test",
     "build": "ng build",
     "build:master": "ng build --configuration=production",
+    "build:test": "ng build --configuration=test",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
