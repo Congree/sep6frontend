@@ -18,10 +18,23 @@ export class FlightDataComponent implements OnInit {
   url2 = `${ environment.API_HOST }/api/Flights/destinations?origin=JFK`; //JFK
   url3 = `${ environment.API_HOST }/api/Flights/destinations?origin=EWR`; //EWR
   url4 = `${ environment.API_HOST }/api/Flights/destinations?origin=LGA`; //LGA
+  url6 = `${ environment.API_HOST }/api/Flights/month/months/origin/origins`; //flights per month per origin
+  url7 = `${ environment.API_HOST }/api/Flights/delays/origins`; // arrival and departure delay
+
+  Months = [];
+  FlightsEWR = [];
+  FlightsJFK = [];
+  FlightsLGA = [];
+
+  ArrivalDelay = [];
+  DepartureDelay = [];
+  Origin = [];
 
   Month = [];  
   Flight = [];  
-  NumberOfFlights = [];
+  NumberOfFlightsJFK = [];
+  NumberOfFlightsEWR = [];
+  NumberOfFlightsLGA = [];
   DestinationJFK = [];
   DestinationEWR = [];
   DestinationLGA = [];
@@ -81,7 +94,7 @@ export class FlightDataComponent implements OnInit {
     this.http.get(this.url2).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.DestinationJFK.push(x.destination);  
-        this.NumberOfFlights.push(x.numberOfFlights);  
+        this.NumberOfFlightsJFK.push(x.numberOfFlights);  
       });  
       this  
       this.barchart = new Chart('canvas2', {  
@@ -90,7 +103,7 @@ export class FlightDataComponent implements OnInit {
           labels: this.DestinationJFK,  
           datasets: [  
             {  
-              data: this.NumberOfFlights,  
+              data: this.NumberOfFlightsJFK,  
               borderColor: '#3cba9f',  
               backgroundColor: [  
                 "#3cb371",  
@@ -128,7 +141,7 @@ export class FlightDataComponent implements OnInit {
     this.http.get(this.url3).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.DestinationEWR.push(x.destination);  
-        this.NumberOfFlights.push(x.numberOfFlights);  
+        this.NumberOfFlightsEWR.push(x.numberOfFlights);  
       });  
       this  
       this.barchart = new Chart('canvas3', {  
@@ -137,7 +150,7 @@ export class FlightDataComponent implements OnInit {
           labels: this.DestinationEWR,  
           datasets: [  
             {  
-              data: this.NumberOfFlights,  
+              data: this.NumberOfFlightsEWR,  
               borderColor: '#3cba9f',  
               backgroundColor: [  
                 "#3cb371",  
@@ -172,10 +185,146 @@ export class FlightDataComponent implements OnInit {
       });  
     });  
 
+    this.http.get(this.url6).subscribe((result: FlighsModel[]) => {
+      result.forEach((x) => {
+        switch (x.origin) {
+          case 'EWR':
+            this.FlightsEWR.push({
+              x: x.month,
+              y: x.flights,
+            });
+            break;
+          case 'JFK':
+            this.FlightsJFK.push({
+              x: x.month,
+              y: x.flights,
+            });
+            break;
+          case 'LGA':
+            this.FlightsLGA.push({
+              x: x.month,
+              y: x.flights,
+            });
+            break;
+        }
+        this.Months.push(x.month);
+      });
+      new Chart('canvas6', {
+        type: 'bar',
+        data: {
+          labels: this.Months,
+     
+          datasets: [
+            {
+           
+              data: this.FlightsEWR,
+              label: 'EWR',
+              backgroundColor: '#3cba9f',
+            },
+            {
+              data: this.FlightsJFK,
+              label: 'JFK',
+              backgroundColor: '#FFCB32',
+            },
+            {
+              data: this.FlightsLGA,
+              label: 'LGA',
+              backgroundColor: '#CB32FF',
+            },
+          ],
+        },
+        options: {
+          legend: {
+            display: true,
+          },
+          scales: {
+            xAxes: [
+              {
+                stacked:true,
+                display: true,
+               
+                ticks: {
+                    // send help
+           
+                },
+              },
+            ],
+            yAxes: [
+              {
+                stacked:true,
+                display: true,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    this.http.get(this.url7).subscribe((result: FlighsModel[]) => {  
+      result.forEach(x => {  
+        this.Origin.push(x.origin);  
+        this.ArrivalDelay.push(x.arrivalDelay);  
+        this.DepartureDelay.push(x.departureDelay);
+      });  
+      this  
+      this.barchart = new Chart('canvas7', {  
+        type: 'bar',  
+        data: {  
+          labels: this.Origin,  
+          datasets: [  
+            {  
+              data: this.ArrivalDelay,  
+              borderColor: '#3cba9f',  
+              backgroundColor: [  
+                "#3cb371",  
+                "#0000FF",  
+                "#9966FF",  
+                
+              ],  
+              fill: true  
+            },
+            {
+              data: this.DepartureDelay,
+              borderColor: '#3cba9f',  
+              backgroundColor: [  
+                "#4C4CFF",  
+                "#00FFFF",  
+                "#f990a7",  
+              ],  
+              fill: true  
+            },
+          ]  
+        },  
+          options: {  
+            legend: {  
+              display: false  
+            },  
+            scales: {  
+              xAxes: [{  
+                display: true,
+                plugins: {
+                  sort:
+                  {
+                    enable: false,
+                    mode: 'function',
+                    reference: [],
+                    sortBy: 'label',
+                    order: 'asc',
+                  }
+                },
+              }],  
+              yAxes: [{  
+                display: true  
+              }],  
+            }  
+          }  
+          });  
+        });  
+    
     this.http.get(this.url4).subscribe((result: FlighsModel[]) => {  
       result.forEach(x => {  
         this.DestinationLGA.push(x.destination);  
-        this.NumberOfFlights.push(x.numberOfFlights);  
+        this.NumberOfFlightsLGA.push(x.numberOfFlights);  
       });  
       this  
       this.barchart = new Chart('canvas4', {  
@@ -184,7 +333,7 @@ export class FlightDataComponent implements OnInit {
           labels: this.DestinationLGA,  
           datasets: [  
             {  
-              data: this.NumberOfFlights,  
+              data: this.NumberOfFlightsLGA,  
               borderColor: '#3cba9f',  
               backgroundColor: [  
                 "#3cb371",  
