@@ -11,11 +11,22 @@ import { environment } from '../../../environments/environment';
 })
 export class PlaneDataComponent implements OnInit {
   data: PlanesModel[];  
-  url1 = `${ environment.API_HOST }/api/Planes/manufacturers`;  
+  url1 = `${ environment.API_HOST }/api/Planes/manufacturers`; 
+  url2 = `${ environment.API_HOST }/api/Planes/model?manufacturer=AIRBUS`;   
+  url3 = `${ environment.API_HOST }/api/Flights/manufacturers`; // number of flights each manufacturer with more than 200 planes is responsible for
+
   Planes = [];
   Manufacturer = []; 
   barchart = [];  
+
+  NumberOfPlanes = [];
+  Model = [];
+
+  NumberOfFLights = [];
+  ManufacturerFlights = [];
+
   constructor(private http: HttpClient) { }  
+
   ngOnInit() {  
     this.http.get(this.url1).subscribe((result: PlanesModel[]) => {  
       result.forEach(x => {  
@@ -63,5 +74,103 @@ export class PlaneDataComponent implements OnInit {
         }  
       });  
     });  
+
+    this.http.get(this.url2).subscribe((result: PlanesModel[]) => {  
+      result.forEach(x => {  
+        this.Model.push(x.model);  
+        this.NumberOfPlanes.push(x.numberOfPlanes);  
+      });  
+      this  
+      this.barchart = new Chart('canvas2', {  
+        type: 'bar',  
+        data: {  
+          labels: this.Model,  
+          datasets: [  
+            {  
+              data: this.NumberOfPlanes,  
+              borderColor: '#3cba9f',  
+              backgroundColor: [  
+                "#3cb371",  
+                "#0000FF",  
+                "#9966FF",  
+                "#4C4CFF",  
+                "#00FFFF",  
+                "#f990a7",  
+                "#aad2ed",  
+                "#FF00FF",  
+                "#3cb371",  
+                "#0000FF",  
+                "#9966FF",  
+                "#4C4CFF",  
+                "#00FFFF",  
+                "#f990a7", 
+              ],  
+              fill: true  
+            }  
+          ]  
+        },  
+        options: {  
+          legend: {  
+            display: false  
+          },  
+          scales: {  
+            xAxes: [{  
+              display: true  
+            }],  
+            yAxes: [{  
+              display: true  
+            }],  
+          }  
+        }  
+      });  
+    }); 
+
+    this.http.get(this.url3).subscribe((result: PlanesModel[]) => {  
+      result.forEach(x => {  
+        this.ManufacturerFlights.push(x.manufacturer);  
+        this.NumberOfFLights.push(x.numberOfFlights);  
+      });  
+      this  
+      this.barchart = new Chart('canvas3', {  
+        type: 'bar',  
+        data: {  
+          labels: this.ManufacturerFlights,  
+          datasets: [  
+            {  
+              data: this.NumberOfFLights,  
+              borderColor: '#3cba9f',  
+              backgroundColor: [  
+                "#3cb371",  
+                "#0000FF",  
+                "#9966FF",  
+                "#4C4CFF",  
+                "#00FFFF",  
+                "#f990a7",  
+                "#aad2ed",  
+                "#FF00FF",  
+                "Blue",  
+                "Red",  
+                "Blue"  
+              ],  
+              fill: true  
+            }  ,
+          ]  
+        },  
+        options: {  
+          legend: {  
+            display: false  
+          },  
+          scales: {  
+            xAxes: [{  
+              display: true  
+            }],  
+            yAxes: [{  
+              display: true  
+            }],  
+          }  
+        }  
+      });  
+    });  
+
   }
 }
