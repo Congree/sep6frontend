@@ -71,6 +71,10 @@ export class PlaneDataComponent implements OnInit {
             ],
             yAxes: [
               {
+                ticks: {
+                  suggestedMin: 0,
+                  suggestedMax: 1800,
+                },
                 display: true,
               },
             ],
@@ -125,6 +129,11 @@ export class PlaneDataComponent implements OnInit {
             ],
             yAxes: [
               {
+                ticks: {
+                  suggestedMin: 0,
+                  suggestedMax: 140,
+                  stepSize: 20,
+                },
                 display: true,
               },
             ],

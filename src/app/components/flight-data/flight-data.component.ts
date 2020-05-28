@@ -5,7 +5,6 @@ import Chart from 'chart.js';
 import { GetMeanAirtimeForOrigin } from './flight-data.requests';
 import { FlighsModel } from 'src/app/models/flighs-model';
 import { environment } from 'src/environments/environment';
-//import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-flight-data',
@@ -52,10 +51,12 @@ export class FlightDataComponent implements OnInit {
   DestinationLGA = [];
   barchart = [];
   constructor(private http: HttpClient) {
-    //  Chart.plugins.unregister(ChartDataLabels);
   }
 
   ngOnInit() {
+
+    //Number of flights per month
+
     this.http.get(this.url1).subscribe((result: FlighsModel[]) => {
       result.forEach((x) => {
         this.Month.push(x.month);
@@ -65,7 +66,7 @@ export class FlightDataComponent implements OnInit {
       this.barchart = new Chart('canvas', {
         type: 'bar',
         data: {
-          labels: this.Month,
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [
             {
               data: this.Flight,
@@ -79,9 +80,11 @@ export class FlightDataComponent implements OnInit {
                 '#f990a7',
                 '#aad2ed',
                 '#FF00FF',
-                'Blue',
-                'Red',
-                'Blue',
+                '#9966FF',
+                '#4C4CFF',
+                '#00FFFF',
+                '#f990a7',
+               
               ],
               fill: true,
             },
@@ -107,6 +110,7 @@ export class FlightDataComponent implements OnInit {
       });
     });
 
+    // Number of flights to top 10 destinations from JFK
     this.http.get(this.url2).subscribe((result: FlighsModel[]) => {
       result.forEach((x) => {
         this.DestinationJFK.push(x.destination);
@@ -125,14 +129,13 @@ export class FlightDataComponent implements OnInit {
                 '#3cb371',
                 '#0000FF',
                 '#9966FF',
-                '#4C4CFF',
+                '#CB32FF',
                 '#00FFFF',
                 '#f990a7',
                 '#aad2ed',
                 '#FF00FF',
-                'Blue',
+                '#FFCB32',
                 'Red',
-                'Blue',
               ],
               fill: true,
             },
@@ -158,6 +161,7 @@ export class FlightDataComponent implements OnInit {
       });
     });
 
+    // Number of flights to top 10 destinations from EWR
     this.http.get(this.url3).subscribe((result: FlighsModel[]) => {
       result.forEach((x) => {
         this.DestinationEWR.push(x.destination);
@@ -176,14 +180,13 @@ export class FlightDataComponent implements OnInit {
                 '#3cb371',
                 '#0000FF',
                 '#9966FF',
-                '#4C4CFF',
+                '#CB32FF',
                 '#00FFFF',
                 '#f990a7',
                 '#aad2ed',
                 '#FF00FF',
-                'Blue',
+                '#FFCB32',
                 'Red',
-                'Blue',
               ],
               fill: true,
             },
@@ -197,6 +200,66 @@ export class FlightDataComponent implements OnInit {
             xAxes: [
               {
                 display: true,
+              },
+            ],
+            yAxes: [
+              {
+                display: true,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    // Number of flights to top 10 destinations from LGA
+    this.http.get(this.url4).subscribe((result: FlighsModel[]) => {
+      result.forEach((x) => {
+        this.DestinationLGA.push(x.destination);
+        this.NumberOfFlightsLGA.push(x.numberOfFlights);
+      });
+      this;
+      this.barchart = new Chart('canvas4', {
+        type: 'bar',
+        data: {
+          labels: this.DestinationLGA,
+          datasets: [
+            {
+              data: this.NumberOfFlightsLGA,
+              borderColor: '#3cba9f',
+              backgroundColor: [
+                '#3cb371',
+                '#0000FF',
+                '#9966FF',
+                '#CB32FF',
+                '#00FFFF',
+                '#f990a7',
+                '#aad2ed',
+                '#FF00FF',
+                '#FFCB32',
+                'Red',
+              ],
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          legend: {
+            display: false,
+          },
+          scales: {
+            xAxes: [
+              {
+                display: true,
+                plugins: {
+                  sort: {
+                    enable: false,
+                    mode: 'function',
+                    reference: [],
+                    sortBy: 'label',
+                    order: 'asc',
+                  },
+                },
               },
             ],
             yAxes: [
@@ -284,6 +347,7 @@ export class FlightDataComponent implements OnInit {
       });
     });
 
+    //Mean arrival and departure delay
     this.http.get(this.url7).subscribe((result: FlighsModel[]) => {
       result.forEach((x) => {
         this.Origin.push(x.origin);
@@ -318,19 +382,15 @@ export class FlightDataComponent implements OnInit {
             xAxes: [
               {
                 display: true,
-                plugins: {
-                  sort: {
-                    enable: false,
-                    mode: 'function',
-                    reference: [],
-                    sortBy: 'label',
-                    order: 'asc',
-                  },
-                },
               },
             ],
             yAxes: [
               {
+                ticks: {
+                  suggestedMin: 30,
+                  suggestedMax: 60,
+                  stepSize: 10,
+                },
                 display: true,
               },
             ],
@@ -505,66 +565,6 @@ export class FlightDataComponent implements OnInit {
       });
     });
 
-    this.http.get(this.url4).subscribe((result: FlighsModel[]) => {
-      result.forEach((x) => {
-        this.DestinationLGA.push(x.destination);
-        this.NumberOfFlightsLGA.push(x.numberOfFlights);
-      });
-      this;
-      this.barchart = new Chart('canvas4', {
-        type: 'bar',
-        data: {
-          labels: this.DestinationLGA,
-          datasets: [
-            {
-              data: this.NumberOfFlightsLGA,
-              borderColor: '#3cba9f',
-              backgroundColor: [
-                '#3cb371',
-                '#0000FF',
-                '#9966FF',
-                '#4C4CFF',
-                '#00FFFF',
-                '#f990a7',
-                '#aad2ed',
-                '#FF00FF',
-                'Blue',
-                'Red',
-                'Blue',
-              ],
-              fill: true,
-            },
-          ],
-        },
-        options: {
-          legend: {
-            display: false,
-          },
-          scales: {
-            xAxes: [
-              {
-                display: true,
-                plugins: {
-                  sort: {
-                    enable: false,
-                    mode: 'function',
-                    reference: [],
-                    sortBy: 'label',
-                    order: 'asc',
-                  },
-                },
-              },
-            ],
-            yAxes: [
-              {
-                display: true,
-              },
-            ],
-          },
-        },
-      });
-    });
-
     this.InitAirtimeChart();
   }
 
@@ -607,6 +607,11 @@ export class FlightDataComponent implements OnInit {
           ],
           yAxes: [
             {
+              ticks: {
+                suggestedMin: 100,
+                suggestedMax: 240,
+                stepSize: 40,
+              },
               display: true,
             },
           ],
