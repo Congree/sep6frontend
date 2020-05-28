@@ -74,7 +74,7 @@ export class WeatherDataComponent implements OnInit {
         options: {
           events: [],
           tooltips: {
-            enabled: false
+            enabled: false,
           },
           legend: {
             display: false,
@@ -99,7 +99,7 @@ export class WeatherDataComponent implements OnInit {
       });
     });
 
-  this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
+    this.http.get(this.url2).subscribe((result: WeatherModel[]) => {
       result.forEach((x) => {
         switch (x.origin) {
           case 'JFK':
@@ -154,7 +154,7 @@ export class WeatherDataComponent implements OnInit {
         options: {
           events: [],
           tooltips: {
-            enabled: false
+            enabled: false,
           },
           legend: {
             display: true,
@@ -213,7 +213,7 @@ export class WeatherDataComponent implements OnInit {
         },
         options: {
           tooltips: {
-            enabled: true
+            enabled: true,
           },
           legend: {
             display: false,
@@ -230,7 +230,7 @@ export class WeatherDataComponent implements OnInit {
                 ticks: {
                   suggestedMin: 8700,
                   suggestedMax: 8715,
-                }
+                },
               },
             ],
           },
@@ -252,9 +252,7 @@ export class WeatherDataComponent implements OnInit {
             {
               data: this.MeanTemperatureCelsiusJFK,
               borderColor: '#3cba9f',
-              backgroundColor: [
-                '#3cb371',
-              ],
+              backgroundColor: ['#3cb371'],
               showLine: false,
               fill: true,
             },
@@ -262,7 +260,7 @@ export class WeatherDataComponent implements OnInit {
         },
         options: {
           tooltips: {
-            enabled: true
+            enabled: true,
           },
           legend: {
             display: false,
@@ -342,7 +340,7 @@ export class WeatherDataComponent implements OnInit {
         options: {
           events: [],
           tooltips: {
-            enabled: false
+            enabled: false,
           },
           legend: {
             display: true,
