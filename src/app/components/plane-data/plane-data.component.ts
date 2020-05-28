@@ -17,7 +17,6 @@ export class PlaneDataComponent implements OnInit {
 
   Planes = [];
   Manufacturer = [];
-  barchart = [];
 
   NumberOfPlanes = [];
   Model = [];
@@ -33,8 +32,7 @@ export class PlaneDataComponent implements OnInit {
         this.Manufacturer.push(x.manufacturer);
         this.Planes.push(x.planes);
       });
-      this;
-      this.barchart = new Chart('canvas', {
+      new Chart('canvas', {
         type: 'bar',
         data: {
           labels: this.Manufacturer,
@@ -84,8 +82,7 @@ export class PlaneDataComponent implements OnInit {
         this.Model.push(x.model);
         this.NumberOfPlanes.push(x.numberOfPlanes);
       });
-      this;
-      this.barchart = new Chart('canvas2', {
+      new Chart('canvas2', {
         type: 'bar',
         data: {
           labels: this.Model,
@@ -138,8 +135,7 @@ export class PlaneDataComponent implements OnInit {
         this.ManufacturerFlights.push(x.manufacturer);
         this.NumberOfFLights.push(x.numberOfFlights);
       });
-      this;
-      this.barchart = new Chart('canvas3', {
+      new Chart('canvas3', {
         type: 'bar',
         data: {
           labels: this.ManufacturerFlights,
