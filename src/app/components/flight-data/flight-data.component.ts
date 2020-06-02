@@ -20,7 +20,7 @@ export class FlightDataComponent implements OnInit {
   url6 = `${environment.API_HOST}/api/Flights/month/months/origin/origins`; //flights per month per origin stacked
   url7 = `${environment.API_HOST}/api/Flights/delays/origins`; // arrival and departure delay
   url8 = `${environment.API_HOST}/api/Flights/month/months/origin/origins`; //flights per month per origin
-  url9 = `${environment.API_HOST}/api/Flights/month/months/origin/origins`; //flights per month per origin stacked percentage
+  url9 = `${environment.API_HOST}/api/Flights/month/months/origin/origins?percentage=true`; //flights per month per origin stacked percentage
 
   Months = [];
   FlightsEWR = [];
@@ -480,19 +480,19 @@ export class FlightDataComponent implements OnInit {
           case 'EWR':
             this.FlightsEWRpercent.push({
               x: x.month,
-              y: x.flights,
+              y: x.percentage,
             });
             break;
           case 'JFK':
             this.FlightsJFKpercent.push({
               x: x.month,
-              y: x.flights,
+              y: x.percentage,
             });
             break;
           case 'LGA':
             this.FlightsLGApercent.push({
               x: x.month,
-              y: x.flights,
+              y: x.percentage,
             });
             break;
         }
@@ -535,29 +535,12 @@ export class FlightDataComponent implements OnInit {
               {
                 stacked: true,
                 display: true,
-
-                ticks: {
-                  // send help
-                },
               },
             ],
             yAxes: [
               {
                 stacked: true,
                 display: true,
-
-                ticks: {
-                  // send help
-                  min: 0,
-                  max: 14139, 
-                  stepSize: 3534.75,
-                  /* min: 0,
-                  max: 11915,
-                  stepSize: 2978.75, */
-                  callback: function (value) {
-                    return ((value / this.max) * 100).toFixed(0) + '%'; // convert to percentage
-                  },
-                },
               },
             ],
           },
