@@ -7,6 +7,7 @@ export class FlighsModel {
     public monthNr: number;
     public arrivalDelay: number;
     public departureDelay: number;
+    public percentage: number;
 
     constructor(
         month :string,
@@ -17,6 +18,7 @@ export class FlighsModel {
         monthNr: number,
         arrivalDelay: number,
         departureDelay: number,
+        percentage: number,
     ) {
         this.month = month;
         this.flights = flights;
@@ -26,6 +28,7 @@ export class FlighsModel {
         this.monthNr = monthNr;
         this.arrivalDelay = arrivalDelay;
         this.departureDelay = departureDelay;
+        this.percentage = percentage;
     }
 
 }
